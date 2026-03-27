@@ -1,0 +1,103 @@
+## Build outputs (.NET / MSBuild)
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+[Ll]ogs/
+[Dd]ebug/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]uild/
+out/
+artifacts/
+[Dd]ebugPS/
+[Rr]eleasePS/
+
+## Visual Studio
+.vs/
+*.user
+*.userosscache
+*.suo
+*.userprefs
+*.sln.docstates
+*.VC.db
+*.VC.VC.opendb
+*.rsuser
+
+## MSBuild / NuGet (project-local)
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.log
+*.tlog
+*.cache
+project.lock.json
+project.fragment.lock.json
+artifacts.json
+**/packages/*
+!**/packages/build/
+*.nupkg
+*.snupkg
+*.coverage
+*.coveragexml
+
+## Rider / JetBrains
+.idea/
+*.sln.iml
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+## VS Code (keep shared settings optional)
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+## ASP.NET / publish
+App_Data/
+[Bb]undles/
+*.Publish.xml
+*.pubxml
+*.publishproj
+PublishProfiles/
+*.azurePubxml
+*.pubxml.user
+*.publishsettings
+**/Orleans.codegen.cs
+
+## Test & benchmarks
+*.trx
+*.VisualState.xml
+BenchmarkDotNet.Artifacts/
+
+## Windows Store / packaging (if used)
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload
+
+## Version control / tooling junk
+*.vspscc
+*.vssscc
+.scc
+_TeamCity*
+
+## OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+## Local secrets (enable if you use these patterns)
+# *.pfx
+# appsettings.*.local.json
+# secrets.json
