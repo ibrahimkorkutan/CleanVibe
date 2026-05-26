@@ -1,0 +1,25 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge:latest
+    container_name: cleanvibe-sql-edge
+    environment:
+      ACCEPT_EULA: "1"
+      MSSQL_SA_PASSWORD: "VibeCoding_2026!"
+    ports:
+      - "14330:1433"
+    volumes:
+      - cleanvibe-sqldata:/var/opt/mssql
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: cleanvibe-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - cleanvibe-redisdata:/data
+    restart: unless-stopped
+
+volumes:
+  cleanvibe-sqldata:
+  cleanvibe-redisdata:

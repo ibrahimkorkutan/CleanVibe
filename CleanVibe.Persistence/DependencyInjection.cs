@@ -13,13 +13,13 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration)
     {
-        var databaseName = configuration["Persistence:InMemoryDatabaseName"]
+        var connectionString = configuration.GetConnectionString("DefaultConnection")
             ?? throw new InvalidOperationException(
-                "Configuration key 'Persistence:InMemoryDatabaseName' is missing.");
+                "Connection string 'DefaultConnection' is not configured.");
 
         services.AddDbContext<AppDbContext>((_, options) =>
         {
-            options.UseInMemoryDatabase(databaseName);
+            options.UseSqlServer(connectionString);
             options.AddInterceptors(new AuditEntityInterceptor());
         });
 

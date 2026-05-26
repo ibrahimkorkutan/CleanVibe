@@ -1,13 +1,15 @@
 using CleanVibe.Application.Common.Interfaces;
+using CleanVibe.Application.Features.Products;
 using CleanVibe.Domain.Entities;
+using Mapster;
 using MediatR;
 
 namespace CleanVibe.Application.Features.Products.Commands.CreateProduct;
 
 public sealed class CreateProductHandler(IApplicationDbContext context)
-    : IRequestHandler<CreateProductCommand, CreateProductResponse>
+    : IRequestHandler<CreateProductCommand, ProductDto>
 {
-    public async Task<CreateProductResponse> Handle(
+    public async Task<ProductDto> Handle(
         CreateProductCommand request,
         CancellationToken cancellationToken)
     {
@@ -21,14 +23,6 @@ public sealed class CreateProductHandler(IApplicationDbContext context)
         context.Products.Add(product);
         await context.SaveChangesAsync(cancellationToken);
 
-        return new CreateProductResponse(
-            product.Id,
-            product.Name,
-            product.Price,
-            product.StockQuantity,
-            product.CreatedAt,
-            product.UpdatedAt,
-            product.CreatedBy,
-            product.UpdatedBy);
+        return product.Adapt<ProductDto>();
     }
 }

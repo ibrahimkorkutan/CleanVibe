@@ -1,8 +1,11 @@
 using CleanVibe.Api.Infrastructure;
 using CleanVibe.Application;
+using CleanVibe.Application.Features.Products;
 using CleanVibe.Application.Features.Products.Commands.CreateProduct;
+using CleanVibe.Application.Features.Products.Queries.GetProductById;
 using CleanVibe.Infrastructure;
 using CleanVibe.Persistence;
+using Microsoft.AspNetCore.Http.HttpResults;
 using MediatR;
 using Scalar.AspNetCore;
 
@@ -17,7 +20,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddApplicationServices();
 builder.Services.AddPersistenceServices(builder.Configuration);
-builder.Services.AddInfrastructureServices();
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 var app = builder.Build();
 
@@ -42,13 +45,26 @@ app.UseHttpsRedirection();
 app.MapOpenApi();
 
 app.MapPost("/products", async (CreateProductRequest body, IMediator mediator, CancellationToken cancellationToken) =>
-{
-    var response = await mediator.Send(
-        new CreateProductCommand(body.Name, body.Price),
-        cancellationToken);
+    {
+        ProductDto dto = await mediator.Send(
+            new CreateProductCommand(body.Name, body.Price),
+            cancellationToken);
 
-    return Results.Ok(response);
-});
+        return TypedResults.Ok(dto);
+    })
+    .Produces<ProductDto>(StatusCodes.Status200OK);
+
+app.MapGet("/products/{id:guid}",
+    async Task<Results<Ok<ProductDto>, NotFound>> (Guid id, IMediator mediator, CancellationToken cancellationToken) =>
+    {
+        ProductDto? product = await mediator.Send(
+            new GetProductByIdQuery(id),
+            cancellationToken);
+
+        return product is null ? TypedResults.NotFound() : TypedResults.Ok(product);
+    })
+    .Produces<ProductDto>(StatusCodes.Status200OK)
+    .Produces(StatusCodes.Status404NotFound);
 
 app.Run();
 
